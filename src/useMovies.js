@@ -15,8 +15,11 @@ export function useMovies(query) {
         try {
           setIsLoading(true);
           setError("");
+          if (!process.env.REACT_APP_OMDB_API_KEY) {
+            throw new Error("OMDb API key is not configured.");
+          }
           const res = await fetch(
-            `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${query} 
+            `https://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${query}
       `,
             { signal: controller.signal },
           );
